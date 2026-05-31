@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Streaming Cast Report - Marketing Agents</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#59fabc",
+                        "outline-variant": "#a9aeb1",
+                        "secondary-dim": "#00595e",
+                        "tertiary-container": "#c7dcf4",
+                        "secondary-fixed": "#7eeef7",
+                        "error-container": "#fb5151",
+                        "secondary": "#00666c",
+                        "on-secondary-container": "#00575d",
+                        "surface-tint": "#006949",
+                        "on-tertiary-fixed": "#283c4e",
+                        "on-secondary-fixed-variant": "#006268",
+                        "primary-dim": "#005b3f",
+                        "on-secondary-fixed": "#004347",
+                        "on-secondary": "#cdfbff",
+                        "primary": "#006949",
+                        "surface": "#f3f7fb",
+                        "on-surface-variant": "#575c60",
+                        "secondary-fixed-dim": "#6fdfe9",
+                        "tertiary-fixed-dim": "#b9cee5",
+                        "surface-container-low": "#ecf1f6",
+                        "surface-container": "#e3e9ee",
+                        "on-primary-fixed-variant": "#006748",
+                        "inverse-surface": "#0a0f12",
+                        "surface-bright": "#f3f7fb",
+                        "surface-container-high": "#dde3e8",
+                        "error-dim": "#9f0519",
+                        "tertiary-fixed": "#c7dcf4",
+                        "on-error-container": "#570008",
+                        "surface-variant": "#d7dee3",
+                        "tertiary-dim": "#3e5265",
+                        "inverse-on-surface": "#999da1",
+                        "error": "#b31b25",
+                        "on-tertiary-container": "#3b4f62",
+                        "primary-container": "#59fabc",
+                        "surface-dim": "#ced5db",
+                        "inverse-primary": "#59fabc",
+                        "secondary-container": "#7eeef7",
+                        "on-tertiary": "#ebf3ff",
+                        "on-primary": "#c8ffe2",
+                        "on-primary-container": "#005c40",
+                        "on-tertiary-fixed-variant": "#44586b",
+                        "on-surface": "#2a2f32",
+                        "on-background": "#2a2f32",
+                        "outline": "#73777b",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f3f7fb",
+                        "primary-fixed-dim": "#47ebaf",
+                        "tertiary": "#4a5d71",
+                        "on-primary-fixed": "#004730",
+                        "on-error": "#ffefee",
+                        "surface-container-highest": "#d7dee3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "16px",
+                        "bubble-gap": "12px",
+                        "max-width-chat": "900px",
+                        "app-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["DM Sans"],
+                        "headline-lg": ["DM Sans"],
+                        "label-sm": ["DM Sans"],
+                        "body-md": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex flex-col pt-[60px] pb-[80px]">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full h-[60px] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 z-50 flex justify-between items-center px-app-margin max-w-max-width-chat mx-auto left-0 right-0">
+<div class="flex items-center gap-3">
+<img alt="ProSieben Logo" class="w-8 h-8 rounded" src="https://lh3.googleusercontent.com/aida/ADBb0ujGbdTQddpQGavoym3oYXsrMjaXGRzgelhN36h1ykw3vD4ExsizBk6IlVP9M_2KbEKWW02MKGZmmdcREuMNAMdzjLeKT5Ykmiok-OJJIjPhWojUnNTFz3zN2Sa9Nsanq8l1x_mmyFOUnoRKf7-y4Cr5EdkJMnDYnJ2roO7Cpjd7ivfrq15RAZDqIE9Xkv-QbXZdyAEKvsnOfeQDmsV-OIZHZ_8mHnHeyLopy4BopLeX5M024opQaxsyDrpN"/>
+<h1 class="font-headline-lg text-headline-lg bg-gradient-to-r from-primary to-secondary-fixed bg-clip-text text-transparent">Marketing Agents</h1>
+<div class="flex items-center gap-1.5 ml-2">
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant hidden md:inline-block">Connected</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-70" href="#">Briefing</a>
+<a class="font-body-md text-body-md text-primary border-b-2 border-primary pb-1 cursor-pointer active:opacity-70" href="#">Insights</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-70" href="#">Hooks</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-70 flex items-center">
+<span class="material-symbols-outlined">language</span>
+<span class="font-label-sm text-label-sm ml-1">EN</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-[800px] mx-auto px-container-padding md:px-0 flex flex-col gap-bubble-gap mt-6 relative">
+<!-- Progress Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5 shadow-sm relative overflow-hidden">
+<!-- Generating Shimmer Header -->
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary spinner">progress_activity</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Generating cast report...</h2>
+</div>
+<!-- Steps -->
+<ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-dim text-[18px]">check_circle</span>
+<span>Fetching wiki &amp; social data</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-dim text-[18px]">check_circle</span>
+<span>Profiled Emmy Russ</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-dim text-[18px]">check_circle</span>
+<span>Profiled Cosimo Citiolo</span>
+</li>
+<li class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-primary spinner text-[18px]">progress_activity</span>
+<span class="font-medium relative overflow-hidden inline-block">
+                        Profiling Jürgen Milski...
+                        <div class="absolute inset-0 shimmer pointer-events-none"></div>
+</span>
+</li>
+</ul>
+<div class="mt-4 pt-3 border-t border-outline-variant/20">
+<span class="font-label-sm text-label-sm text-outline">5 profiles remaining</span>
+</div>
+</div>
+<!-- Cast Carousel Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 shadow-sm relative mt-4">
+<!-- Controls -->
+<div class="absolute top-4 right-4 bg-surface-variant text-on-surface-variant font-label-sm text-label-sm px-3 py-1 rounded-full">
+                3 / 8
+            </div>
+<button class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-variant text-on-surface transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-variant text-on-surface transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<div class="px-8 max-w-2xl mx-auto flex flex-col items-center">
+<!-- Profile Header -->
+<div class="w-24 h-24 rounded-full bg-surface-variant mb-4 overflow-hidden border-2 border-surface flex items-center justify-center relative" data-alt="A brightly lit, high-key portrait placeholder of a young woman with blonde hair, set against a pristine white studio background. The lighting is soft and even, highlighting a polished, modern aesthetic typical of premium reality TV casting materials. Subtle shadows define the elegant, minimalist light-mode environment.">
+<span class="material-symbols-outlined text-outline text-4xl">person</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-2">Emmy Russ</h3>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2 justify-center mb-8">
+<span class="bg-surface-container px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant">Age: 24</span>
+<span class="bg-surface-container px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant">Profession: Reality TV</span>
+<span class="bg-surface-container px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant">Known From: Promi Big Brother</span>
+</div>
+<!-- Details Grid -->
+<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+<div class="space-y-4">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">campaign</span>
+                                Marketing Role
+                            </h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                Polarizing figure, high engagement generator. Appeals to Gen Z demographics with dramatic narrative arcs.
+                            </p>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">forum</span>
+                                Social Media
+                            </h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                Instagram: <a class="text-primary hover:underline" href="#">@emmyruss</a><br/>
+                                Followers: 250k (Active Engagement)
+                            </p>
+</div>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">auto_awesome</span>
+                            Public Narrative
+                        </h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Frequently cast as the "unpredictable provocateur". Brand collaborations should focus on disruptive, high-energy campaigns rather than family-friendly messaging.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Assistant Message (Streaming Markdown) -->
+<div class="mt-4 flex gap-4">
+<div class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-primary/10">
+<img alt="Assistant Avatar" class="w-6 h-6 rounded-sm" src="https://lh3.googleusercontent.com/aida/ADBb0ujGbdTQddpQGavoym3oYXsrMjaXGRzgelhN36h1ykw3vD4ExsizBk6IlVP9M_2KbEKWW02MKGZmmdcREuMNAMdzjLeKT5Ykmiok-OJJIjPhWojUnNTFz3zN2Sa9Nsanq8l1x_mmyFOUnoRKf7-y4Cr5EdkJMnDYnJ2roO7Cpjd7ivfrq15RAZDqIE9Xkv-QbXZdyAEKvsnOfeQDmsV-OIZHZ_8mHnHeyLopy4BopLeX5M024opQaxsyDrpN"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-3 flex items-center gap-2">
+                    Cast Research Report
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+</h4>
+<div class="overflow-x-auto border border-outline-variant/30 rounded-lg">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-sm text-label-sm text-on-surface uppercase tracking-wider">
+<th class="p-3 border-b border-outline-variant/30">Cast Member</th>
+<th class="p-3 border-b border-outline-variant/30">Age</th>
+<th class="p-3 border-b border-outline-variant/30">Followers</th>
+<th class="p-3 border-b border-outline-variant/30">Marketing Fit</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface-variant">
+<tr class="border-b border-outline-variant/20 hover:bg-surface-container-lowest transition-colors bg-surface-container-lowest">
+<td class="p-3">Emmy Russ</td>
+<td class="p-3">24</td>
+<td class="p-3">250k</td>
+<td class="p-3">High Engagement / Disruptive</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-surface-container-lowest transition-colors bg-surface-container-lowest">
+<td class="p-3">Cosimo Citiolo</td>
+<td class="p-3">41</td>
+<td class="p-3">310k</td>
+<td class="p-3">Comedic Relief / Broad Appeal</td>
+</tr>
+<tr class="bg-surface-container-lowest opacity-60">
+<td class="p-3 relative overflow-hidden">
+<div class="h-4 w-3/4 bg-surface-variant rounded"></div>
+<div class="absolute inset-0 shimmer pointer-events-none"></div>
+</td>
+<td class="p-3 relative overflow-hidden">
+<div class="h-4 w-8 bg-surface-variant rounded"></div>
+<div class="absolute inset-0 shimmer pointer-events-none"></div>
+</td>
+<td class="p-3 relative overflow-hidden">
+<div class="h-4 w-12 bg-surface-variant rounded"></div>
+<div class="absolute inset-0 shimmer pointer-events-none"></div>
+</td>
+<td class="p-3 relative overflow-hidden">
+<div class="h-4 w-full bg-surface-variant rounded"></div>
+<div class="absolute inset-0 shimmer pointer-events-none"></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Composer Bar (Disabled State) -->
+<div class="fixed bottom-0 w-full bg-surface-container-lowest border-t border-outline-variant/30 p-4 z-40 left-0 right-0 shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
+<div class="max-w-max-width-chat mx-auto flex items-end gap-2 bg-surface-container-low rounded-xl p-2 border border-outline-variant/20 opacity-70">
+<button class="p-2 text-outline cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-body-md text-on-surface-variant p-2 cursor-not-allowed" disabled="" placeholder="Generating report... Please wait." rows="1"></textarea>
+<button class="p-2 w-10 h-10 rounded-lg bg-surface-variant text-outline flex items-center justify-center cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined spinner">progress_activity</span>
+</button>
+</div>
+</div>
+</body></html>

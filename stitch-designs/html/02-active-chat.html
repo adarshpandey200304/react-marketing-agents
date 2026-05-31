@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marketing Agents - Active Chat</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#4a5d71",
+                    "on-surface": "#2a2f32",
+                    "inverse-surface": "#0a0f12",
+                    "secondary-container": "#7eeef7",
+                    "on-secondary-fixed-variant": "#006268",
+                    "tertiary-fixed": "#c7dcf4",
+                    "surface-container-highest": "#d7dee3",
+                    "error-container": "#fb5151",
+                    "secondary": "#00666c",
+                    "on-primary": "#c8ffe2",
+                    "surface-container-low": "#ecf1f6",
+                    "on-error-container": "#570008",
+                    "on-primary-fixed-variant": "#006748",
+                    "surface-variant": "#d7dee3",
+                    "error-dim": "#9f0519",
+                    "on-tertiary-container": "#3b4f62",
+                    "primary": "#006949",
+                    "inverse-on-surface": "#999da1",
+                    "on-primary-container": "#005c40",
+                    "tertiary-dim": "#3e5265",
+                    "primary-fixed": "#59fabc",
+                    "secondary-dim": "#00595e",
+                    "on-primary-fixed": "#004730",
+                    "background": "#f3f7fb",
+                    "surface-container-high": "#dde3e8",
+                    "on-error": "#ffefee",
+                    "surface": "#f3f7fb",
+                    "primary-fixed-dim": "#47ebaf",
+                    "outline-variant": "#a9aeb1",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#73777b",
+                    "tertiary-fixed-dim": "#b9cee5",
+                    "on-secondary": "#cdfbff",
+                    "on-secondary-container": "#00575d",
+                    "on-tertiary-fixed": "#283c4e",
+                    "on-tertiary-fixed-variant": "#44586b",
+                    "surface-tint": "#006949",
+                    "on-surface-variant": "#575c60",
+                    "inverse-primary": "#59fabc",
+                    "surface-bright": "#f3f7fb",
+                    "secondary-fixed-dim": "#6fdfe9",
+                    "error": "#b31b25",
+                    "primary-container": "#59fabc",
+                    "secondary-fixed": "#7eeef7",
+                    "surface-dim": "#ced5db",
+                    "primary-dim": "#005b3f",
+                    "on-tertiary": "#ebf3ff",
+                    "on-secondary-fixed": "#004347",
+                    "on-background": "#2a2f32",
+                    "surface-container": "#e3e9ee",
+                    "tertiary-container": "#c7dcf4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "bubble-gap": "12px",
+                    "app-margin": "24px",
+                    "container-padding": "16px",
+                    "max-width-chat": "900px"
+            },
+            "fontFamily": {
+                    "body-md": ["DM Sans"],
+                    "headline-lg": ["DM Sans"],
+                    "headline-md": ["DM Sans"],
+                    "label-sm": ["DM Sans"]
+            },
+            "fontSize": {
+                    "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+                    "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                    "headline-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased flex flex-col h-screen overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md fixed top-0 w-full h-[60px] border-b border-outline-variant/30 flat no shadows z-50">
+<div class="flex justify-between items-center px-app-margin max-w-max-width-chat mx-auto w-full h-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0">
+<span class="font-headline-md text-headline-md text-primary">7</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg bg-gradient-to-r from-primary to-secondary-fixed bg-clip-text text-transparent truncate cursor-pointer active:opacity-70">Marketing Agents</h1>
+</div>
+<nav class="hidden md:flex gap-6">
+<a class="font-body-md text-body-md text-primary border-b-2 border-primary pb-1 cursor-pointer active:opacity-70" href="#">Briefing</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-70" href="#">Insights</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-70" href="#">Hooks</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant/30">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Connected</span>
+</div>
+<button aria-label="Toggle Language" class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">language</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Chat Canvas -->
+<main class="flex-1 overflow-y-auto pt-[80px] pb-[160px] px-container-padding flex flex-col items-center">
+<div class="w-full max-w-[800px] flex flex-col gap-bubble-gap">
+<!-- User Bubble -->
+<div class="flex flex-col items-end w-full group">
+<div class="max-w-[85%] md:max-w-[75%] rounded-2xl rounded-br-sm bg-gradient-to-br from-primary to-[#00cc92] text-on-primary px-4 py-3 shadow-sm border border-[#00cc92]/20 relative">
+<p class="font-body-md text-body-md">Research the cast of Promi Big Brother 2024</p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity">10:42 AM</span>
+</div>
+<!-- Assistant Bubble -->
+<div class="flex flex-col items-start w-full group mt-4">
+<div class="max-w-[95%] md:max-w-[85%] rounded-2xl rounded-bl-sm bg-surface-container-lowest text-on-surface p-4 shadow-sm border border-outline-variant/30 flex flex-col gap-4">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        I found 8 cast members. Here's the research playback — review and edit the list before I generate full profiles.
+                    </p>
+<!-- Data Table within Bubble -->
+<div class="w-full overflow-x-auto rounded-lg border border-outline-variant/30">
+<table class="w-full text-left border-collapse min-w-[500px]">
+<thead class="bg-surface-container-low border-b border-outline-variant/30">
+<tr>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-2.5 px-4 font-semibold uppercase tracking-wider">Cast Member</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-2.5 px-4 font-semibold uppercase tracking-wider">Identity Anchor (URL)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 bg-surface-container-lowest">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface">Emmy Russ</td>
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant/70 truncate max-w-[200px]">https://de.wikipedia.org/wiki/Emmy_Russ</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface">Cosimo Citiolo</td>
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant/70 truncate max-w-[200px]">https://de.wikipedia.org/wiki/Cosimo_Citiolo</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface">Jürgen Milski</td>
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant/70 truncate max-w-[200px]">https://de.wikipedia.org/wiki/J%C3%BCrgen_Milski</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface">Verena Kerth</td>
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant/70 truncate max-w-[200px]">https://de.wikipedia.org/wiki/Verena_Kerth</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface">Daniela Katzenberger</td>
+<td class="py-3 px-4 font-body-md text-body-md text-on-surface-variant/70 truncate max-w-[200px]">https://de.wikipedia.org/wiki/Daniela_Katzenberger</td>
+</tr>
+<tr class="bg-surface-container-low/30">
+<td class="py-2 px-4 text-center font-label-sm text-label-sm text-on-surface-variant italic" colspan="2">
+                                        + 3 more entries
+                                    </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Follow-up Chips -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2 pl-[5%] md:pl-[10%]">
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-outline-variant/50 bg-surface-container-lowest text-on-surface hover:bg-surface-container-low hover:border-primary/50 transition-all font-label-sm text-label-sm shadow-sm">
+<span>✅</span> Generate Cast Report
+                </button>
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border-2 border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 transition-all font-label-sm text-label-sm font-semibold shadow-sm">
+<span>✏️</span> Edit Cast List
+                </button>
+</div>
+<!-- Edit Card (Opened State) -->
+<div class="mt-6 w-full max-w-[95%] md:max-w-[85%] self-end mr-auto ml-auto md:ml-0 md:mr-auto rounded-xl bg-surface-container-lowest shadow-md border border-outline-variant/40 overflow-hidden transform transition-all duration-300 ease-in-out opacity-100 translate-y-0 relative before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-primary">
+<div class="p-5 border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-low/30">
+<h3 class="font-headline-md text-headline-md text-on-surface">Edit Cast List</h3>
+<button class="text-on-surface-variant hover:text-error transition-colors p-1 rounded-full hover:bg-error/10">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-5 flex flex-col gap-4">
+<div class="w-full overflow-x-auto rounded border border-outline-variant/30">
+<table class="w-full text-left border-collapse min-w-[500px]">
+<thead class="bg-surface-container-low border-b border-outline-variant/30">
+<tr>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-2 px-3 font-semibold uppercase tracking-wider w-[40%]">Name</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-2 px-3 font-semibold uppercase tracking-wider w-[60%]">Anchor URL</th>
+<th class="w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<tr>
+<td class="p-2">
+<input class="w-full bg-surface border border-outline-variant/50 rounded px-3 py-1.5 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all" type="text" value="Emmy Russ"/>
+</td>
+<td class="p-2">
+<input class="w-full bg-surface border border-outline-variant/50 rounded px-3 py-1.5 font-body-md text-body-md text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all" type="text" value="https://de.wikipedia.org/wiki/Emmy_Russ"/>
+</td>
+<td class="p-2 text-center">
+<button class="text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</td>
+</tr>
+<tr>
+<td class="p-2">
+<input class="w-full bg-surface border border-outline-variant/50 rounded px-3 py-1.5 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all" type="text" value="Cosimo Citiolo"/>
+</td>
+<td class="p-2">
+<input class="w-full bg-surface border border-outline-variant/50 rounded px-3 py-1.5 font-body-md text-body-md text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all" type="text" value="https://de.wikipedia.org/wiki/Cosimo_Citiolo"/>
+</td>
+<td class="p-2 text-center">
+<button class="text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<button class="font-label-sm text-label-sm text-primary hover:text-primary-dim font-medium self-start flex items-center gap-1 py-1 px-2 rounded hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span> Add cast member
+                    </button>
+</div>
+<div class="p-4 border-t border-outline-variant/20 bg-surface-container-low/30 flex justify-end gap-3">
+<button class="px-4 py-2 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors border border-transparent">
+                        Cancel
+                    </button>
+<button class="px-5 py-2 rounded-lg font-label-sm text-label-sm text-on-primary bg-gradient-to-r from-primary to-[#00cc92] hover:opacity-90 shadow-sm transition-all font-medium flex items-center gap-2">
+                        Confirm &amp; Generate
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Spacing at bottom to ensure scrolling past the composer -->
+<div class="h-10"></div>
+</div>
+</main>
+<!-- Bottom Composer Area -->
+<div class="fixed bottom-0 w-full bg-gradient-to-t from-surface via-surface to-transparent pt-8 pb-app-margin px-container-padding z-40 pointer-events-none">
+<div class="max-w-max-width-chat mx-auto pointer-events-auto flex flex-col gap-2">
+<!-- Staged File Chip -->
+<div class="flex items-center self-start gap-2 bg-surface-container-highest border border-outline-variant/40 rounded-full px-3 py-1.5 shadow-sm ml-2 animate-fade-in-up">
+<span class="material-symbols-outlined text-[16px] text-tertiary">description</span>
+<span class="font-label-sm text-label-sm text-on-surface truncate max-w-[150px]">campaign-brief.pdf</span>
+<button class="text-outline hover:text-error transition-colors flex items-center justify-center rounded-full hover:bg-error/10 p-0.5">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+<!-- Input Bar -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-2xl p-2 shadow-sm focus-within:border-primary/50 focus-within:shadow-md focus-within:ring-1 focus-within:ring-primary/20 transition-all flex items-end gap-2">
+<button aria-label="Attach file" class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary/5 rounded-xl flex-shrink-0">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none resize-none font-body-md text-body-md text-on-surface placeholder:text-outline focus:ring-0 p-2 min-h-[44px] max-h-[120px]" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" placeholder="Ask follow-up questions or refine..." rows="1"></textarea>
+<button aria-label="Send message" class="p-2.5 rounded-xl bg-gradient-to-r from-primary to-[#00cc92] text-on-primary hover:opacity-90 transition-all flex-shrink-0 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1">send</span>
+</button>
+</div>
+<div class="text-center mt-1">
+<span class="font-label-sm text-label-sm text-outline text-[10px]">Marketing Agents can make mistakes. Consider verifying important information.</span>
+</div>
+</div>
+</div>
+<style>
+        .animate-fade-in-up {
+            animation: fadeInUp 0.3s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: theme('colors.outline-variant' / 30%);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: theme('colors.outline-variant' / 50%);
+        }
+    </style>
+<script>
+        // Simple auto-resize textarea logic fallback
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+    </script>
+</body></html>

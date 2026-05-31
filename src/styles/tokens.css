@@ -1,0 +1,58 @@
+/* Design tokens — extracted verbatim from frontend-migration.md §2.
+   Light theme, locked. Font: DM Sans. */
+:root {
+  /* Core surfaces */
+  --bg: hsl(209, 40%, 96%);
+  --surface: hsl(210, 40%, 98%);
+  --surface-white: #ffffff;
+  --border: hsl(212, 26%, 83%);
+
+  /* Text */
+  --text: hsl(222, 47%, 11%);
+  --text-muted: hsl(215, 16%, 46%);
+  --text-secondary: hsl(215, 19%, 35%);
+
+  /* Brand */
+  --grad: linear-gradient(135deg, hsl(163, 100%, 40%), hsl(180, 80%, 40%));
+  --brand: hsl(163, 100%, 40%);
+  --brand-text: hsl(163, 100%, 35%);
+  --logo-bg: hsl(215, 19%, 34%);
+
+  /* Status */
+  --status-ok: hsl(163, 100%, 45%);
+  --status-err: hsl(0, 84%, 60%);
+  --danger: #dc2626;
+
+  /* Shape / spacing */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --header-h: 60px;
+  --chat-max: 820px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.12);
+
+  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Pulsing status dots (§2) */
+@keyframes pulse-g {
+  0% { box-shadow: 0 0 0 0 hsla(163, 100%, 45%, 0.6); }
+  70% { box-shadow: 0 0 0 6px hsla(163, 100%, 45%, 0); }
+  100% { box-shadow: 0 0 0 0 hsla(163, 100%, 45%, 0); }
+}
+@keyframes pulse-r {
+  0% { box-shadow: 0 0 0 0 hsla(0, 84%, 60%, 0.6); }
+  70% { box-shadow: 0 0 0 6px hsla(0, 84%, 60%, 0); }
+  100% { box-shadow: 0 0 0 0 hsla(0, 84%, 60%, 0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

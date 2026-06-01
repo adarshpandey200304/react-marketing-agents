@@ -4,7 +4,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
     plugins: [react()],
     server: {
+        host: true, // bind 0.0.0.0 so the ngrok tunnel can reach it
         port: 5173,
+        // Allow requests proxied in under the ngrok tunnel's Host header.
+        allowedHosts: ['trapeze-stargazer-mutation.ngrok-free.dev'],
         // Proxy API calls to the FastAPI backend in dev so there are no CORS issues.
         proxy: {
             '/api': { target: 'http://localhost:8000', changeOrigin: true },

@@ -2,6 +2,13 @@
 
 export type Language = 'english' | 'german';
 
+/** The 4 ordered stages of the guided marketing workflow (the stepper). */
+export type WorkflowStep =
+  | 'content_briefing'
+  | 'cast_research'
+  | 'consumer_insights'
+  | 'creative_ideation';
+
 export type Intent =
   | 'pdf_upload'
   | 'content_briefing'
@@ -74,6 +81,14 @@ export interface ThinkingStep {
 export interface EditingState {
   type: 'cast' | 'briefing';
   messageId: string;
+}
+
+/** A past session shown in the sidebar (GET /api/conversations). */
+export interface ConversationSummary {
+  conversation_id: string;
+  title: string;
+  updated_at: string;
+  created_at: string;
 }
 
 // ----- SSE chunk shapes (frontend-migration.md §3 / §6) -----

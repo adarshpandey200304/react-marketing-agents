@@ -91,6 +91,128 @@ button { font-family: inherit; cursor: pointer; }
 }
 .logo svg { width: 22px; height: 22px; fill: #fff; }
 
+/* ---------- Sidebar drawer (previous sessions) ---------- */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--surface-white);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 80;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+}
+.sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 70;
+  animation: fadeIn 0.2s ease-out;
+}
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-new { flex: 1; justify-content: center; }
+.sidebar-close {
+  flex: none;
+  border: none; background: transparent; color: var(--text-muted);
+  display: flex; padding: 6px; border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+.sidebar-close:hover { background: hsl(210, 40%, 95%); color: var(--text); }
+.sidebar-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 14px 14px 6px;
+}
+.sidebar-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sidebar-empty {
+  font-size: 12.5px; color: var(--text-muted);
+  text-align: center; padding: 18px 8px; margin: 0;
+}
+.sidebar-item {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  width: 100%; text-align: left;
+  padding: 9px 11px;
+  border: none; background: transparent;
+  border-radius: var(--radius-sm);
+  transition: background 0.12s;
+}
+.sidebar-item:hover:not(:disabled) { background: hsl(210, 40%, 95%); }
+.sidebar-item.active { background: hsla(163, 100%, 40%, 0.1); }
+.sidebar-item:disabled { cursor: default; }
+.sidebar-item-title {
+  font-size: 13px; font-weight: 500; color: var(--text);
+  max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sidebar-item.active .sidebar-item-title { color: var(--brand-text); }
+.sidebar-item-time { font-size: 11px; color: var(--text-muted); }
+
+/* ---------- Header user / sign-out ---------- */
+.user-info { display: flex; align-items: center; gap: 8px; }
+.user-name {
+  font-size: 13px; color: var(--text-secondary);
+  max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.signout-btn {
+  border: none; background: transparent; color: var(--text-muted);
+  display: flex; padding: 5px; border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.signout-btn:hover { color: var(--danger); background: hsla(0, 84%, 60%, 0.08); }
+.header-menu-btn {
+  flex: none;
+  border: none; background: transparent; color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+.header-menu-btn:hover { background: hsl(210, 40%, 95%); color: var(--text); }
+
+/* ---------- Login gate ---------- */
+.login-page {
+  height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+}
+.login-card {
+  background: var(--surface-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 40px;
+  max-width: 380px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  text-align: center;
+}
+.login-title { margin: 0; font-size: 22px; font-weight: 700; color: var(--text); }
+.login-sub { margin: 0; font-size: 14px; color: var(--text-muted); }
+.login-btn {
+  width: 100%; justify-content: center;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px; font-size: 15px;
+}
+
+/* The drawer overlays content at every width; just tidy the header on small screens. */
+@media (max-width: 600px) {
+  .user-name { display: none; }
+  .sidebar { width: 82vw; max-width: var(--sidebar-w); }
+}
+
 /* ---------- Language toggle ---------- */
 .lang-toggle {
   display: flex;
@@ -129,6 +251,188 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   gap: 18px;
+}
+
+/* ---------- Guided workflow stepper ---------- */
+.wf-stepper-slot {
+  max-width: var(--chat-max);
+  margin: 0 auto;
+  padding: 18px 16px 0;
+}
+.wf-stepper {
+  background: var(--surface-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 22px 22px;
+  animation: wf-rise 0.5s ease-out both;
+}
+.wf-stepper-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.wf-title { margin: 0; font-size: 15px; font-weight: 700; color: var(--text); }
+.wf-sub { margin: 2px 0 0; font-size: 12.5px; color: var(--text-muted); }
+.wf-progress-badge {
+  flex: none;
+  font-size: 12px; font-weight: 700;
+  color: var(--brand-text);
+  background: hsla(163, 100%, 40%, 0.12);
+  padding: 4px 12px; border-radius: 999px;
+}
+
+.wf-track { position: relative; }
+
+/* Horizontal connector rail behind the nodes (spans node centres: 12.5%→87.5%). */
+.wf-rail {
+  position: absolute;
+  top: 23px; /* half of the 46px node */
+  left: 12.5%;
+  right: 12.5%;
+  height: 3px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.wf-rail-fill {
+  height: 100%;
+  width: var(--wf-progress, 0%);
+  background: var(--grad);
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wf-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.wf-step {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 9px;
+  position: relative;
+}
+
+/* The clickable circular node. */
+.wf-node {
+  position: relative;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface-white);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, border-color 0.2s, background 0.3s, color 0.2s, box-shadow 0.2s;
+}
+.wf-node:disabled { cursor: default; }
+.wf-node:not(:disabled):hover { transform: translateY(-2px); }
+.wf-node .wf-icon { font-size: 22px; }
+
+/* Tiny step-number badge in the corner of each node. */
+.wf-step-num {
+  position: absolute;
+  top: -4px; right: -4px;
+  width: 17px; height: 17px;
+  border-radius: 50%;
+  background: var(--surface-white);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Pulse ring used by the active node. */
+.wf-node-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wf-step-text { display: flex; flex-direction: column; gap: 1px; max-width: 150px; }
+.wf-step-label { font-size: 13px; font-weight: 600; color: var(--text); }
+.wf-step-hint { font-size: 11.5px; color: var(--text-muted); line-height: 1.35; }
+
+/* --- status: done --- */
+.wf-done .wf-node {
+  background: var(--grad);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.wf-done .wf-check { font-size: 24px; animation: wf-pop 0.35s ease-out; }
+.wf-done .wf-step-num { background: var(--brand); border-color: transparent; color: #fff; }
+.wf-done .wf-step-hint { color: var(--brand-text); font-weight: 600; }
+
+/* --- status: current (next recommended, unlocked) --- */
+.wf-current .wf-node {
+  border-color: var(--brand);
+  color: var(--brand-text);
+  animation: wf-bob 1.8s ease-in-out infinite;
+  box-shadow: 0 0 0 4px hsla(163, 100%, 40%, 0.12);
+}
+.wf-current .wf-node:hover { box-shadow: 0 0 0 5px hsla(163, 100%, 40%, 0.18); }
+.wf-current .wf-step-num { border-color: var(--brand); color: var(--brand-text); }
+.wf-current .wf-step-label { color: var(--brand-text); }
+.wf-current .wf-step-hint { color: var(--brand-text); font-weight: 600; }
+
+/* --- status: active (running) --- */
+.wf-active .wf-node { border-color: var(--brand); color: var(--brand-text); }
+.wf-active .wf-node-ring {
+  border: 2px solid var(--brand);
+  animation: wf-ring 1.4s ease-out infinite;
+}
+.wf-active .wf-spinner {
+  width: 20px; height: 20px;
+  border: 2px solid hsla(163, 100%, 40%, 0.25);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* --- status: locked --- */
+.wf-locked .wf-node { opacity: 0.55; }
+.wf-locked .wf-step-label,
+.wf-locked .wf-step-hint { opacity: 0.7; }
+
+@keyframes wf-rise {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes wf-pop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+@keyframes wf-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes wf-ring {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .wf-step-hint { display: none; }
+  .wf-step-label { font-size: 12px; }
+  .wf-node { width: 42px; height: 42px; }
+  .wf-rail { top: 21px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wf-current .wf-node,
+  .wf-active .wf-node-ring,
+  .wf-done .wf-check { animation: none; }
+  .wf-rail-fill { transition: none; }
 }
 
 /* ---------- Welcome hero ---------- */

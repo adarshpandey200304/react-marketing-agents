@@ -1,4 +1,5 @@
 import { apiUrl, postJson } from './client';
+import { getAuthToken } from '../auth/getAuthToken';
 import type { CastChunk, Language } from '../types';
 
 /**
@@ -11,9 +12,12 @@ export async function streamCastReport(
   onChunk: (chunk: CastChunk) => void,
   signal?: AbortSignal,
 ): Promise<void> {
+  // Acquire the token BEFORE opening the stream: a token cannot be refreshed
+  // mid-stream, and any interaction redirect must happen before the long fetch.
+  const token = await getAuthToken();
   const res = await fetch(apiUrl('/api/cast_report/stream'), {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({
       message: 'Generate cast report',
       conversation_id: params.conversationId,

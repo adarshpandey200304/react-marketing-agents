@@ -3,15 +3,19 @@ import type {
   Action,
   CastChunk,
   CastProfile,
+  ConversationSummary,
   EditingState,
   Language,
   Message,
   ThinkingStep,
+  WorkflowStep,
 } from '../types';
+import { WORKFLOW_STEPS } from '../i18n/strings';
 import { sendMessage as apiSendMessage, uploadFiles } from '../api/chat';
 import { streamCastReport, castEdit } from '../api/cast';
 import { briefingEdit } from '../api/briefing';
 import { ping } from '../api/health';
+import { getJson } from '../api/client';
 
 const CONV_KEY = 'ma_conversation_id';
 const LANG_KEY = 'ma_language';
@@ -43,6 +47,8 @@ const newId = () => crypto.randomUUID();
 
 interface ChatState {
   conversationId: string;
+  conversations: ConversationSummary[]; // sidebar: the user's past sessions
+  sidebarOpen: boolean; // drawer open/closed
   messages: Message[];
   processing: boolean;
   language: Language;
@@ -51,6 +57,10 @@ interface ChatState {
   draft: string;
   editing: EditingState | null;
   pendingUploadText: string | null; // content_briefing button → open picker, then auto-submit
+
+  // guided workflow stepper
+  completedSteps: WorkflowStep[]; // stages the user has finished, in any order
+  activeStep: WorkflowStep | null; // stage currently running (for the pulse)
 
   // basic setters
   setDraft: (v: string) => void;
@@ -64,6 +74,14 @@ interface ChatState {
   openEdit: (e: EditingState) => void;
   closeEdit: () => void;
   newConversation: () => void;
+  fetchConversations: () => Promise<void>;
+  loadConversation: (conversationId: string) => Promise<void>;
+  toggleSidebar: () => void;
+  closeSidebar: () => void;
+
+  // guided workflow stepper
+  goToStep: (step: WorkflowStep) => Promise<void>;
+  markStepDone: (step: WorkflowStep) => void;
 
   // message helpers
   pushMessage: (m: Message) => string;
@@ -84,6 +102,8 @@ let externalFilePicker: (() => void) | null = null;
 
 export const useChatStore = create<ChatState>((set, get) => ({
   conversationId: loadConversationId(),
+  conversations: [],
+  sidebarOpen: false,
   messages: [],
   processing: false,
   language: loadLanguage(),
@@ -92,6 +112,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
   draft: '',
   editing: null,
   pendingUploadText: null,
+  completedSteps: [],
+  activeStep: null,
 
   setDraft: (v) => set({ draft: v }),
   registerFilePicker: (fn) => {
@@ -114,6 +136,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
   clearFiles: () => set({ stagedFiles: [] }),
   openEdit: (e) => set({ editing: e }),
   closeEdit: () => set({ editing: null }),
+  toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
+  closeSidebar: () => set({ sidebarOpen: false }),
 
   // Start a fresh session: new conversation id + cleared chat/doc state. The new
   // id means the server creates a new session, so the briefing only ever sees
@@ -133,8 +157,75 @@ export const useChatStore = create<ChatState>((set, get) => ({
       stagedFiles: [],
       draft: '',
       pendingUploadText: null,
+      completedSteps: [],
+      activeStep: null,
     });
+    void get().fetchConversations();
   },
+
+  // --- sidebar: list past sessions + load one's history ---
+  fetchConversations: async () => {
+    try {
+      const res = await getJson<{ conversations: ConversationSummary[] }>('/api/conversations');
+      set({ conversations: res.conversations ?? [] });
+    } catch {
+      /* sidebar just stays as-is on failure */
+    }
+  },
+
+  // Load a past session: hydrate messages from stored chat_history. Rich widgets
+  // (cast carousel, edit tables, follow-up chips) are NOT reconstructed — only
+  // the markdown content is stored — so everything renders as plain bubbles.
+  loadConversation: async (conversationId: string) => {
+    if (get().processing) return;
+    if (streamAbort) {
+      streamAbort.abort();
+      streamAbort = null;
+    }
+    try {
+      const res = await getJson<{
+        conversation_id: string;
+        chat_history: { role: string; content: string; timestamp?: string }[];
+      }>(`/api/conversations/${conversationId}`);
+      const messages: Message[] = (res.chat_history ?? []).map((m) => ({
+        id: newId(),
+        role: m.role === 'assistant' ? 'assistant' : 'user',
+        content: m.content,
+        timestamp: m.timestamp ? m.timestamp.slice(11, 16) : now(),
+        kind: m.role === 'assistant' ? 'markdown' : undefined,
+      }));
+      sessionStorage.setItem(CONV_KEY, conversationId);
+      set({
+        conversationId,
+        messages,
+        processing: false,
+        editing: null,
+        stagedFiles: [],
+        draft: '',
+        pendingUploadText: null,
+        completedSteps: [],
+        activeStep: null,
+      });
+    } catch (e) {
+      get().pushMessage(errorMessage(e));
+    }
+  },
+
+  // --- guided workflow stepper ---
+  // Dispatch the action behind a stepper stage. content_briefing flows through
+  // handleAction (which opens the file picker); the others hit /api/message.
+  goToStep: async (step) => {
+    if (get().processing) return;
+    const def = WORKFLOW_STEPS.find((s) => s.id === step);
+    if (!def) return;
+    set({ activeStep: step });
+    await get().handleAction({ title: def.label.english, value: def.trigger, intent: def.intent });
+  },
+  markStepDone: (step) =>
+    set((s) => ({
+      activeStep: s.activeStep === step ? null : s.activeStep,
+      completedSteps: s.completedSteps.includes(step) ? s.completedSteps : [...s.completedSteps, step],
+    })),
 
   pushMessage: (m) => {
     set((s) => ({ messages: [...s.messages, m] }));
@@ -186,11 +277,15 @@ export const useChatStore = create<ChatState>((set, get) => ({
         get().pushMessage(
           assistantFromReply(res.reply, res.suggested_actions, res.cast_edit_data, res.briefing_edit_data),
         );
+        // A returned briefing card means the Content Briefing stage is done.
+        if (res.briefing_edit_data) get().markStepDone('content_briefing');
       } else if (uploadReply) {
         get().pushMessage(assistantFromReply(uploadReply, uploadActions));
       }
+      void get().fetchConversations(); // surface the (possibly new) session in the sidebar
     } catch (e) {
       get().pushMessage(errorMessage(e));
+      set({ activeStep: null });
     } finally {
       set({ processing: false });
     }
@@ -241,8 +336,11 @@ export const useChatStore = create<ChatState>((set, get) => ({
       get().pushMessage(
         assistantFromReply(res.reply, res.suggested_actions, res.cast_edit_data, res.briefing_edit_data),
       );
+      if (isWorkflowStep(action.intent)) get().markStepDone(action.intent);
+      void get().fetchConversations();
     } catch (e) {
       get().pushMessage(errorMessage(e));
+      set({ activeStep: null });
     } finally {
       set({ processing: false });
     }
@@ -315,6 +413,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
             kind: 'markdown',
             suggestedActions: chunk.suggested_actions,
           });
+          void get().fetchConversations();
           break;
         }
         case 'error':
@@ -366,6 +465,12 @@ export const useChatStore = create<ChatState>((set, get) => ({
     }
   },
 }));
+
+// ---- helpers ----
+const WORKFLOW_STEP_IDS = new Set<string>(WORKFLOW_STEPS.map((s) => s.id));
+function isWorkflowStep(intent: string): intent is WorkflowStep {
+  return WORKFLOW_STEP_IDS.has(intent);
+}
 
 // ---- builders ----
 function assistantFromReply(

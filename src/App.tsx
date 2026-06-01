@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useChatStore } from './store/useChatStore';
 import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 import WelcomeHero from './components/WelcomeHero';
+import WorkflowStepper from './components/WorkflowStepper';
 import MessageList from './components/MessageList';
 import Composer from './components/Composer';
 import DropOverlay from './components/DropOverlay';
@@ -86,7 +88,11 @@ export default function App() {
       onDrop={onDrop}
     >
       <Header />
+      <Sidebar />
       <main className="main">
+        <div className="wf-stepper-slot">
+          <WorkflowStepper />
+        </div>
         {hasMessages ? <MessageList /> : <WelcomeHero onPickFiles={openFilePicker} />}
       </main>
       <Composer onPickFiles={openFilePicker} />

@@ -1,4 +1,4 @@
-import type { Language } from '../types';
+import type { Intent, Language, WorkflowStep } from '../types';
 
 // Bilingual UI copy (port of the Streamlit `_T` dict, frontend-migration.md §7).
 type Dict = Record<string, { english: string; german: string }>;
@@ -40,6 +40,32 @@ const T: Dict = {
   value: { english: 'Value', german: 'Wert' },
   exportPdf: { english: 'Export PDF', german: 'PDF exportieren' },
   newChat: { english: 'New Chat', german: 'Neuer Chat' },
+
+  // Auth + sidebar
+  signInPrompt: {
+    english: 'Sign in with your organization account to continue.',
+    german: 'Melde dich mit deinem Firmenkonto an, um fortzufahren.',
+  },
+  signInButton: { english: 'Sign in with Microsoft', german: 'Mit Microsoft anmelden' },
+  signOut: { english: 'Sign out', german: 'Abmelden' },
+  previousSessions: { english: 'Previous sessions', german: 'Frühere Sitzungen' },
+  noSessions: { english: 'No previous sessions', german: 'Keine früheren Sitzungen' },
+
+  // Guided workflow stepper
+  workflowTitle: { english: 'Your campaign workflow', german: 'Dein Kampagnen-Workflow' },
+  workflowSub: {
+    english: 'Follow the steps in order — each one builds on the last.',
+    german: 'Folge den Schritten der Reihe nach — jeder baut auf dem vorigen auf.',
+  },
+  stepDone: { english: 'Done', german: 'Erledigt' },
+  stepStart: { english: 'Start', german: 'Starten' },
+  stepNext: { english: 'Next up', german: 'Als Nächstes' },
+  stepLocked: { english: 'Finish the previous step first', german: 'Zuerst den vorigen Schritt abschließen' },
+  stepRedo: { english: 'Redo', german: 'Erneut' },
+  workflowComplete: {
+    english: 'All steps complete — nice work! 🎉',
+    german: 'Alle Schritte abgeschlossen — super! 🎉',
+  },
 };
 
 export function t(key: keyof typeof T, lang: Language): string {
@@ -197,4 +223,63 @@ export const BRIEFING_FIELDS: BriefingFieldDef[] = [
   { key: 'moderation', label: { english: 'Moderation', german: 'Moderation' } },
   { key: 'notable_history', label: { english: 'Notable History', german: 'Bemerkenswerte Historie' } },
   { key: 'context_note', label: { english: 'Context Note', german: 'Kontext-Hinweis' } },
+];
+
+// ----- Guided workflow stepper -----
+// The 4 ordered stages the stepper walks the user through. `trigger`/`intent`
+// mirror the matching FEATURES entry so a step dispatches the same action.
+export interface WorkflowStepDef {
+  id: WorkflowStep;
+  intent: Intent;
+  icon: string; // material symbol
+  label: { english: string; german: string };
+  hint: { english: string; german: string };
+  trigger: string;
+}
+
+export const WORKFLOW_STEPS: WorkflowStepDef[] = [
+  {
+    id: 'content_briefing',
+    intent: 'content_briefing',
+    icon: 'description',
+    label: { english: 'Content Briefing', german: 'Content Briefing' },
+    hint: {
+      english: 'Upload a brief to build the briefing card.',
+      german: 'Lade ein Brief hoch, um die Briefing-Karte zu erstellen.',
+    },
+    trigger: 'Generate a content briefing card',
+  },
+  {
+    id: 'cast_research',
+    intent: 'cast_research',
+    icon: 'person_search',
+    label: { english: 'Cast Research', german: 'Cast-Recherche' },
+    hint: {
+      english: 'Research the show’s cast and build talent profiles.',
+      german: 'Recherchiere die Besetzung und erstelle Talent-Profile.',
+    },
+    trigger: 'Research the cast for a show',
+  },
+  {
+    id: 'consumer_insights',
+    intent: 'consumer_insights',
+    icon: 'analytics',
+    label: { english: 'Consumer Insights', german: 'Consumer Insights' },
+    hint: {
+      english: 'Surface audience segments and trends.',
+      german: 'Finde Zielgruppen-Segmente und Trends.',
+    },
+    trigger: 'Give me consumer insights',
+  },
+  {
+    id: 'creative_ideation',
+    intent: 'creative_ideation',
+    icon: 'auto_awesome',
+    label: { english: 'Creative Ideation', german: 'Kreative Ideenfindung' },
+    hint: {
+      english: 'Turn it all into campaign concepts and hooks.',
+      german: 'Mach daraus Kampagnenkonzepte und Hooks.',
+    },
+    trigger: 'Give me creative campaign ideas',
+  },
 ];

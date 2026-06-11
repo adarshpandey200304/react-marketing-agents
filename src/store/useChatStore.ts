@@ -4,6 +4,7 @@ import type {
   CastChunk,
   CastProfile,
   ConversationSummary,
+  CreativeImage,
   EditingState,
   Language,
   Message,
@@ -275,7 +276,13 @@ export const useChatStore = create<ChatState>((set, get) => ({
       if (text) {
         const res = await apiSendMessage({ message: text, conversationId, language });
         get().pushMessage(
-          assistantFromReply(res.reply, res.suggested_actions, res.cast_edit_data, res.briefing_edit_data),
+          assistantFromReply(
+            res.reply,
+            res.suggested_actions,
+            res.cast_edit_data,
+            res.briefing_edit_data,
+            res.creative_images,
+          ),
         );
         // A returned briefing card means the Content Briefing stage is done.
         if (res.briefing_edit_data) get().markStepDone('content_briefing');
@@ -334,7 +341,13 @@ export const useChatStore = create<ChatState>((set, get) => ({
         intent: action.intent,
       });
       get().pushMessage(
-        assistantFromReply(res.reply, res.suggested_actions, res.cast_edit_data, res.briefing_edit_data),
+        assistantFromReply(
+          res.reply,
+          res.suggested_actions,
+          res.cast_edit_data,
+          res.briefing_edit_data,
+          res.creative_images,
+        ),
       );
       if (isWorkflowStep(action.intent)) get().markStepDone(action.intent);
       void get().fetchConversations();
@@ -478,6 +491,7 @@ function assistantFromReply(
   actions?: Action[],
   castEditData?: Record<string, string>,
   briefingEditData?: Record<string, any>,
+  creativeImages?: CreativeImage[],
 ): Message {
   return {
     id: newId(),
@@ -488,6 +502,7 @@ function assistantFromReply(
     suggestedActions: actions,
     castEditData,
     briefingEditData,
+    creativeImages,
   };
 }
 

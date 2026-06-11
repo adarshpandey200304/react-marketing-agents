@@ -56,6 +56,13 @@ export interface CastProfile {
   promotionalLeverage?: string;
 }
 
+/** One generated campaign key-art image for a creative direction.
+ *  `image` is a PNG data URI, or null if that direction's generation failed. */
+export interface CreativeImage {
+  title: string;
+  image: string | null;
+}
+
 export type MessageKind = 'markdown' | 'carousel' | 'error';
 
 export interface Message {
@@ -69,6 +76,7 @@ export interface Message {
   castEditData?: Record<string, string>; // { name: anchorUrl }
   briefingEditData?: Record<string, BriefingField | string>;
   profiles?: CastProfile[]; // carousel messages
+  creativeImages?: CreativeImage[]; // campaign key-art for creative ideation
   streaming?: boolean; // carousel still receiving chunks
   thinkingSteps?: ThinkingStep[]; // live progress for streaming/processing
 }

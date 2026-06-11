@@ -4,9 +4,25 @@ import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from '@a
 import { EventType } from '@azure/msal-browser';
 import type { AuthenticationResult } from '@azure/msal-browser';
 import { msalInstance } from './auth/msalConfig';
+import { DEV_AUTH } from './auth/getAuthToken';
 import App from './App';
 import LoginPage from './components/LoginPage';
 import './styles/app.css';
+
+// In dev-auth mode the login gate is bypassed: render <App/> directly. We still
+// keep MsalProvider mounted so components using useMsal() (e.g. Header) work.
+const gate = DEV_AUTH ? (
+  <App />
+) : (
+  <>
+    <AuthenticatedTemplate>
+      <App />
+    </AuthenticatedTemplate>
+    <UnauthenticatedTemplate>
+      <LoginPage />
+    </UnauthenticatedTemplate>
+  </>
+);
 
 // MSAL v3 requires initialize() before any other API and before rendering, so it
 // can process the redirect callback. Render inside the .then() (no top-level await).
@@ -24,14 +40,7 @@ void msalInstance.initialize().then(() => {
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <MsalProvider instance={msalInstance}>
-        <AuthenticatedTemplate>
-          <App />
-        </AuthenticatedTemplate>
-        <UnauthenticatedTemplate>
-          <LoginPage />
-        </UnauthenticatedTemplate>
-      </MsalProvider>
+      <MsalProvider instance={msalInstance}>{gate}</MsalProvider>
     </StrictMode>,
   );
 });

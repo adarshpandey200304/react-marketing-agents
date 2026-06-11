@@ -8,6 +8,7 @@ import ThinkingCard from './ThinkingCard';
 import CastCarousel from './CastCarousel';
 import CastEditTable from './CastEditTable';
 import BriefingEditTable from './BriefingEditTable';
+import CreativeImageGallery from './CreativeImageGallery';
 
 export default function MessageList() {
   const messages = useChatStore((s) => s.messages);
@@ -79,6 +80,9 @@ function MessageItem({ message, editingId }: { message: Message; editingId?: str
   return (
     <>
       <BotMessage message={message} />
+      {message.creativeImages && message.creativeImages.length > 0 && (
+        <CreativeImageGallery images={message.creativeImages} />
+      )}
       {message.suggestedActions && <FollowUpButtons actions={message.suggestedActions} />}
       {isEditingThis && editing.type === 'cast' && message.castEditData && (
         <CastEditTable data={message.castEditData} />

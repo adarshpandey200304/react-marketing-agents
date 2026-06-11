@@ -1,11 +1,12 @@
 import { postJson, postForm } from './client';
-import type { Action, BriefingField, Intent, Language } from '../types';
+import type { Action, BriefingField, CreativeImage, Intent, Language } from '../types';
 
 export interface MessageResponse {
   reply: string;
   suggested_actions?: Action[];
   cast_edit_data?: Record<string, string>;
   briefing_edit_data?: Record<string, BriefingField | string>;
+  creative_images?: CreativeImage[];
 }
 
 /** POST /api/message — main chat router (§3). Omit `intent` to let the backend classify. */
